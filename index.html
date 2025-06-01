@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RPS Battle</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #ffe259, #ffa751);
+      text-align: center;
+      padding: 50px;
+      color: #222;
+    }
+
+    h1 {
+      font-size: 3em;
+      color: #444;
+      margin-bottom: 20px;
+    }
+
+    .game-options {
+      margin: 25px 0;
+    }
+
+    .game-options button {
+      padding: 12px 25px;
+      font-size: 20px;
+      margin: 12px;
+      border: 2px solid #333;
+      border-radius: 10px;
+      background-color: #ffffff;
+      color: #333;
+      cursor: pointer;
+      box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+      transition: transform 0.2s;
+    }
+
+    .game-options button:hover {
+      transform: scale(1.1);
+      background-color: #f1f1f1;
+    }
+
+    .game-result, .game-score {
+      font-size: 1.3em;
+      margin-top: 25px;
+    }
+
+    .emphasize {
+      color: #d32f2f;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>RPS Battle</h1>
+  <div class="game-options">
+    <button onclick="startMatch('rock')">🪨 Rock</button>
+    <button onclick="startMatch('paper')">📃 Paper</button>
+    <button onclick="startMatch('scissors')">✂️ Scissors</button>
+  </div>
+
+  <div class="game-result" id="matchResult"></div>
+  <div class="game-score" id="matchScore">You: 0 | Bot: 0</div>
+
+  <script>
+    let userPoints = 0;
+    let botPoints = 0;
+
+    function startMatch(userPick) {
+      const options = ['rock', 'paper', 'scissors'];
+      const botPick = options[Math.floor(Math.random() * 3)];
+
+      let message = `You picked <span class="emphasize">${userPick}</span>, Bot picked <span class="emphasize">${botPick}</span>.`;
+
+      if (userPick === botPick) {
+        message += " It's a tie!";
+      } else if (
+        (userPick === 'rock' && botPick === 'scissors') ||
+        (userPick === 'paper' && botPick === 'rock') ||
+        (userPick === 'scissors' && botPick === 'paper')
+      ) {
+        userPoints++;
+        message += " You scored!";
+      } else {
+        botPoints++;
+        message += " Bot wins this round!";
+      }
+
+      document.getElementById('matchResult').innerHTML = message;
+      document.getElementById('matchScore').innerHTML = `You: ${userPoints} | Bot: ${botPoints}`;
+    }
+  </script>
+</body>
+</html>
